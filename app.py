@@ -5,13 +5,13 @@ from datetime import datetime
 from gerar_pdf import gerar_relatorio_pdf
 
 # --- CONFIGURAÇÃO DA PÁGINA ---
-st.set_page_config(page_title="Diagnóstico Smart Caixilho", layout="centered")
+st.set_page_config(page_title="Diagnóstico Caixilho", layout="centered")
 
 if 'db_leads' not in st.session_state:
     st.session_state['db_leads'] = []
 
 # --- CABEÇALHO ---
-st.title("Diagnóstico Smart Caixilho")
+st.title("Diagnóstico Caixilho")
 st.subheader("Modernização da Cadeia de Esquadrias de Alumínio")
 st.markdown("---")
 
@@ -30,8 +30,8 @@ st.markdown("### 📝 Passo 2: Avaliação de Maturidade")
 
 st.markdown("""
 > Este diagnóstico avalia a maturidade digital da sua fábrica em automação,
-> integração de dados, gestão e cultura de inovação. Responda com sinceridade
-> — não há certo ou errado. Em menos de 5 minutos, você recebe um relatório
+> integração de dados, gestão e cultura de inovação. Responda com sinceridade!
+> Não há certo ou errado. Em menos de 5 minutos, você recebe um relatório
 > personalizado com seu perfil atual e recomendações práticas para evoluir.
 """)
 

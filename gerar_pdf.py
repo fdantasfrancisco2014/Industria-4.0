@@ -1,12 +1,12 @@
 """
-gerar_pdf.py — Módulo de geração de relatório PDF para o Smart Caixilho
+gerar_pdf.py — Módulo de geração de relatório PDF para o Caixilho
 Dependências: reportlab, matplotlib, numpy
 Uso no Streamlit:
     from gerar_pdf import gerar_relatorio_pdf
     pdf_bytes = gerar_relatorio_pdf(empresa, responsavel, cargo, email, telefone,
                                     respostas, nivel, total, pct, data_hoje)
     st.download_button("📥 Baixar Relatório PDF", pdf_bytes,
-                       file_name=f"SmartCaixilho_{empresa}.pdf", mime="application/pdf")
+                       file_name=f"Caixilho_{empresa}.pdf", mime="application/pdf")
 """
 
 import math
@@ -30,12 +30,12 @@ from reportlab.graphics.shapes import Drawing, Rect, String
 from reportlab.graphics import renderPDF
 
 # ── Paleta ASES ──────────────────────────────────────────────────────────────
-AZUL_ESCURO  = colors.HexColor("#0A2540")
-DOURADO      = colors.HexColor("#C9A84C")
-CINZA_CLARO  = colors.HexColor("#F8F7F4")
-CINZA_MEDIO  = colors.HexColor("#E5E3DC")
-CINZA_TEXTO  = colors.HexColor("#64748B")
-BRANCO       = colors.white
+MARROM_ACINZENTADO         = colors.HexColor("#464034")
+DOURADO                    = colors.HexColor("#C9A84C")
+LARANJA_ACIZENTADO_PASTEL  = colors.HexColor("#dbbe9e")
+CINZA_MEDIO                = colors.HexColor("#E5E3DC")
+PRETO                      = colors.HexColor("#000000")
+LARANJA CLARO              = colors.HexColor("#eed1ad")
 
 PAGE_W, PAGE_H = A4  # 595 x 842 pt
 
@@ -176,7 +176,7 @@ def _cabecalho(empresa, responsavel, cargo, data_hoje, estilos) -> list:
     d_header = Drawing(W, 70)
     d_header.add(Rect(0, 0, W, 70, fillColor=AZUL_ESCURO,
                       strokeColor=None, rx=8, ry=8))
-    d_header.add(String(16, 44, "Diagnóstico Smart Caixilho",
+    d_header.add(String(16, 44, "Diagnóstico Caixilho",
                         fontName="Helvetica-Bold", fontSize=16,
                         fillColor=colors.white))
     d_header.add(String(16, 28, "Modernização da Cadeia de Esquadrias de Alumínio",
@@ -228,7 +228,7 @@ def _metricas(total, pct, nivel, estilos) -> Table:
     t = Table(data, colWidths=[cell_w] * 3)
     t.setStyle(TableStyle([
         ("VALIGN",        (0, 0), (-1, -1), "TOP"),
-        ("BACKGROUND",    (0, 0), (-1, -1), CINZA_CLARO),
+        ("BACKGROUND",    (0, 0), (-1, -1), LARANJA_ACINZENTADO_PASTEL),
         ("LINEAFTER",     (0, 0), (1, 0),   0.5, CINZA_MEDIO),
         ("TOPPADDING",    (0, 0), (-1, -1), 12),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 12),
@@ -283,7 +283,7 @@ def _radar_e_recs(dims, perguntas, respostas, estilos) -> Table:
         ("LEFTPADDING",   (1, 0), (1, -1),  16),
         ("RIGHTPADDING",  (0, 0), (-1, -1), 8),
         ("LINEAFTER",     (0, 0), (0, -1),  0.5, CINZA_MEDIO),
-        ("BACKGROUND",    (0, 0), (-1, -1), BRANCO),
+        ("BACKGROUND",    (0, 0), (-1, -1), LARANJA_CLARO),
     ]))
     return t
 
@@ -296,7 +296,7 @@ def _bloco_ia(perguntas_ia, respostas, estilos) -> Table:
     cells = []
     for p in perguntas_ia:
         nota = respostas[p["id"]]
-        bg = colors.HexColor("#FDF8EE") if nota <= 1 else CINZA_CLARO
+        bg = colors.HexColor("#FDF8EE") if nota <= 1 else LARANJA_ACINZENTADO_PASTEL
         brd = DOURADO if nota <= 1 else CINZA_MEDIO
         cell_content = [
             Paragraph(p["label"], estilos["ia_label"]),
@@ -309,7 +309,7 @@ def _bloco_ia(perguntas_ia, respostas, estilos) -> Table:
     t = Table(data, colWidths=[cell_w] * len(perguntas_ia))
     t.setStyle(TableStyle([
         ("VALIGN",        (0, 0), (-1, -1), "TOP"),
-        ("BACKGROUND",    (0, 0), (-1, -1), CINZA_CLARO),
+        ("BACKGROUND",    (0, 0), (-1, -1), LARANJA_ACINZENTADO_PASTEL),
         ("TOPPADDING",    (0, 0), (-1, -1), 12),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 12),
         ("LEFTPADDING",   (0, 0), (-1, -1), 14),
@@ -337,7 +337,7 @@ def _rodape(estilos) -> Table:
         ("LEFTPADDING",   (0, 0), (-1, -1), 14),
         ("RIGHTPADDING",  (0, 0), (-1, -1), 8),
         ("LINEABOVE",     (0, 0), (-1, 0),  0.5, CINZA_MEDIO),
-        ("BACKGROUND",    (0, 0), (-1, -1), BRANCO),
+        ("BACKGROUND",    (0, 0), (-1, -1), LARANJA_CLARO),
     ]))
     return t
 
